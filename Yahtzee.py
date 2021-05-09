@@ -502,6 +502,7 @@ class Game:
             self.yahtzee_bonus()
 
         # making it the turn of the next player
+        self.calculate = 0
         self.count += 1
         if self.count == self.player_count:
             self.count = 0

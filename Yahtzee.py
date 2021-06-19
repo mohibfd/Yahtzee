@@ -1,5 +1,6 @@
 import collections
 
+
 class Game:
     def __init__(self):
         self.player_count = 0
@@ -26,7 +27,8 @@ class Game:
         # setting up 2d arrays for each player's score, available options and what they cut
         self.score = [[0 for i in range(14)] for j in range(self.player_count)]
 
-        self.available_options = [[True for i in range(14)] for j in range(self.player_count)]
+        self.available_options = [
+            [True for i in range(14)] for j in range(self.player_count)]
         # setting last element in the list to false for the bonus yahtzee
         for i in self.available_options:
             i[13] = False
@@ -41,47 +43,45 @@ class Game:
         for i in range(self.player_count):
             self.players.append(input(f"give player {i + 1} name: ").upper())
 
-        print("Hello ", end="")
+        print("Hello " + self.players[0], end="")
         for i in self.players:
-            print(i + " ", end="")
-        print("\n")
+            if i != self.players[0]:
+                print(" and " + i, end="")
 
     def rules(self):
+        print("\n\nYour turn " + self.players[self.count])
         # printing the scores for all the different options
-        print(f"\n\n\nAces      .      {self.score[self.count][0]} {self.cut[self.count][0]}\n\n")
-        print(f"        .\nTwos             {self.score[self.count][1]} {self.cut[self.count][1]}\n            .\n")
-        print(f"        .\nThrees    .      {self.score[self.count][2]} {self.cut[self.count][2]}\n            .\n")
-        print(f"        .   .\nFours            {self.score[self.count][3]} {self.cut[self.count][3]}\n        .   .\n")
-        print(f"        .   .\nFives     .      {self.score[self.count][4]} {self.cut[self.count][4]}\n        .   .\n")
-        print(f"        .   .\nSixes   .   .    {self.score[self.count][5]} {self.cut[self.count][5]}\n        .   .\n")
+        print(
+            f"\n\n\nAces      .      {self.score[self.count][0]} {self.cut[self.count][0]}                      3 of a kind XXX                     {self.score[self.count][6]} {self.cut[self.count][6]}\n\n")
+        print(
+            f"        .                                4 of a kind XXXX                    {self.score[self.count][7]} {self.cut[self.count][7]}\nTwos             {self.score[self.count][1]} {self.cut[self.count][1]}\n            .")
+        print(
+            f"                                         Full House XXYYY                    {self.score[self.count][8]} {self.cut[self.count][8]}\n        .\nThrees    .      {self.score[self.count][2]} {self.cut[self.count][2]}\n            .                            Sm Straight x(x+1)(x+2)(x+3)        {self.score[self.count][9]} {self.cut[self.count][9]}\n")
+        print(
+            f"        .   .\nFours            {self.score[self.count][3]} {self.cut[self.count][3]}                      Lg Straight x(x+1)(x+2)(x+3)(x+4)   {self.score[self.count][10]} {self.cut[self.count][10]}\n        .   .\n")
+        print(
+            f"        .   .                            Yahtzee XXXXX                       {self.score[self.count][11]} {self.cut[self.count][11]}\nFives     .      {self.score[self.count][4]} {self.cut[self.count][4]}\n        .   .")
+        print(
+            f"                                         Chance (anything)                   {self.score[self.count][12]} {self.cut[self.count][12]}\n        .   .\nSixes   .   .    {self.score[self.count][5]} {self.cut[self.count][5]}\n        .   .                            Yahtzee BONUS XXXXX                 {self.score[self.count][13]}\n")
         upper_total = sum(self.score[self.count][:6])
         lower_total = sum(self.score[self.count][6:14])
         bonus_total = 0
         if upper_total >= 63:
             bonus_total += 35
         print("TOTAL SCORE = " + str(upper_total))
-        print("BONUS +35 if total is 63 or over")
-        print("TOTAL of upper section = " + str(upper_total + bonus_total) + "\n")
-        print(f"3 of a kind XXX                     {self.score[self.count][6]} {self.cut[self.count][6]}")
-        print(f"4 of a kind XXXX                    {self.score[self.count][7]} {self.cut[self.count][7]}")
-        print(f"Full House XXYYY                    {self.score[self.count][8]} {self.cut[self.count][8]}")
-        print(f"Sm Straight x(x+1)(x+2)(x+3)        {self.score[self.count][9]} {self.cut[self.count][9]}")
-        print(f"Lg Straight x(x+1)(x+2)(x+3)(x+4)   {self.score[self.count][10]} {self.cut[self.count][10]}")
-        print(f"Yahtzee XXXXX                       {self.score[self.count][11]} {self.cut[self.count][11]}")
-        print(f"Chance (anything)                   {self.score[self.count][12]} {self.cut[self.count][12]}")
-        print(f"Yahtzee BONUS XXXXX                 {self.score[self.count][13]}")
-        print("TOTAL of lower section = " + str(lower_total))
+        print(
+            f"TOTAL of upper section = {upper_total + bonus_total}               TOTAL of lower section = {lower_total}")
+        print("BONUS +35 if total is 63 or over \n")
+
         total = sum(self.score[self.count]) + bonus_total
-        print("\nGRAND TOTAL = " + str(total) + "\n")
+        print("\n                          GRAND TOTAL = " + str(total) + "\n")
 
     def dice_roll(self):
-        print("\n\nYour turn " + self.players[self.count])
-
         while True:
             # try statement in case the user input is wrong
             try:
                 # taking the user's dice as input and making sure it is 5 dice of value between 1 to 6
-                dice_throw = input("What did you roll ")
+                dice_throw = input("\nWhat did you roll ")
                 print("\n")
                 self.dice = dice_throw.split()
                 new_dice = []
@@ -111,7 +111,8 @@ class Game:
         if 1 in self.dice:
             predict = 0
             for i in self.dice:
-                if i == 1: predict += 1
+                if i == 1:
+                    predict += 1
             print("(1) Aces is AVAILABLE  " + str(predict))
             return 1
 
@@ -125,7 +126,8 @@ class Game:
         if 2 in self.dice:
             predict = 0
             for i in self.dice:
-                if i == 2: predict += 2
+                if i == 2:
+                    predict += 2
             print("(2) Twos is AVAILABLE  " + str(predict))
             return 1
 
@@ -139,7 +141,8 @@ class Game:
         if 3 in self.dice:
             predict = 0
             for i in self.dice:
-                if i == 3: predict += 3
+                if i == 3:
+                    predict += 3
             print("(3) Threes is AVAILABLE  " + str(predict))
             return 1
 
@@ -153,7 +156,8 @@ class Game:
         if 4 in self.dice:
             predict = 0
             for i in self.dice:
-                if i == 4: predict += 4
+                if i == 4:
+                    predict += 4
             print("(4) Fours is AVAILABLE  " + str(predict))
             return 1
 
@@ -167,7 +171,8 @@ class Game:
         if 5 in self.dice:
             predict = 0
             for i in self.dice:
-                if i == 5: predict += 5
+                if i == 5:
+                    predict += 5
             print("(5) Fives is AVAILABLE  " + str(predict))
             return 1
 
@@ -181,7 +186,8 @@ class Game:
         if 6 in self.dice:
             predict = 0
             for i in self.dice:
-                if i == 6: predict += 6
+                if i == 6:
+                    predict += 6
             print("(6) Sixes is AVAILABLE  " + str(predict))
             return 1
 
@@ -327,7 +333,8 @@ class Game:
     def one_er(self):
         if self.one_er_availability():
             for i in self.dice:
-                if i == 1: self.calculate += 1
+                if i == 1:
+                    self.calculate += 1
             self.score[self.count][0] = self.calculate
         else:
             self.cut[self.count][0] = "CUT"
@@ -336,7 +343,8 @@ class Game:
     def two_er(self):
         if self.two_er_availability():
             for i in self.dice:
-                if i == 2: self.calculate += 2
+                if i == 2:
+                    self.calculate += 2
             self.score[self.count][1] = self.calculate
         else:
             self.cut[self.count][1] = "CUT"
@@ -345,7 +353,8 @@ class Game:
     def three_er(self):
         if self.three_er_availability():
             for i in self.dice:
-                if i == 3: self.calculate += 3
+                if i == 3:
+                    self.calculate += 3
             self.score[self.count][2] = self.calculate
         else:
             self.cut[self.count][2] = "CUT"
@@ -354,7 +363,8 @@ class Game:
     def four_er(self):
         if self.four_er_availability():
             for i in self.dice:
-                if i == 4: self.calculate += 4
+                if i == 4:
+                    self.calculate += 4
             self.score[self.count][3] = self.calculate
         else:
             self.cut[self.count][3] = "CUT"
@@ -363,7 +373,8 @@ class Game:
     def five_er(self):
         if self.five_er_availability():
             for i in self.dice:
-                if i == 5: self.calculate += 5
+                if i == 5:
+                    self.calculate += 5
             self.score[self.count][4] = self.calculate
         else:
             self.cut[self.count][4] = "CUT"
@@ -372,7 +383,8 @@ class Game:
     def six_er(self):
         if self.six_er_availability():
             for i in self.dice:
-                if i == 6: self.calculate += 6
+                if i == 6:
+                    self.calculate += 6
             self.score[self.count][5] = self.calculate
         else:
             self.cut[self.count][5] = "CUT"
@@ -463,7 +475,8 @@ class Game:
                     print("Sorry but there are no available options")
                     break
 
-                choosing = int(input(f"\nPick one of the options {available_options} "))
+                choosing = int(
+                    input(f"\nPick one of the options {available_options} "))
                 if choosing not in available_options:
                     raise Exception
                 break

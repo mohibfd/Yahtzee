@@ -52,7 +52,7 @@ class Game:
         print("\n\nYour turn " + self.players[self.count])
         # printing the scores for all the different options
         print(
-            f"\n\n\nAces      .      {self.score[self.count][0]} {self.cut[self.count][0]}                      3 of a kind XXX                     {self.score[self.count][6]} {self.cut[self.count][6]}\n\n")
+            f"\n\Aces      .      {self.score[self.count][0]} {self.cut[self.count][0]}                      3 of a kind XXX                     {self.score[self.count][6]} {self.cut[self.count][6]}\n\n")
         print(
             f"        .                                4 of a kind XXXX                    {self.score[self.count][7]} {self.cut[self.count][7]}\nTwos             {self.score[self.count][1]} {self.cut[self.count][1]}\n            .")
         print(

@@ -1,3 +1,4 @@
 # Yahtzee
-To play the game all you need to do is run the Yahtzee.py file using python3
+To play the game run the following command on your terminal __python3 Yahtzee.py__ 
+
 For best experience play on the terminal using font size 24

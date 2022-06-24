@@ -52,7 +52,7 @@ class Game:
         print("\n\nYour turn " + self.players[self.count])
         # printing the scores for all the different options
         print(
-            f"\n\Aces      .      {self.score[self.count][0]} {self.cut[self.count][0]}                      3 of a kind XXX                     {self.score[self.count][6]} {self.cut[self.count][6]}\n\n")
+            f"\nAces      .      {self.score[self.count][0]} {self.cut[self.count][0]}                      3 of a kind XXX                     {self.score[self.count][6]} {self.cut[self.count][6]}\n\n")
         print(
             f"        .                                4 of a kind XXXX                    {self.score[self.count][7]} {self.cut[self.count][7]}\nTwos             {self.score[self.count][1]} {self.cut[self.count][1]}\n            .")
         print(
@@ -242,37 +242,29 @@ class Game:
         else:
             print("(9) Full_house can be cut")
 
-    def little_street_availability(self):
+    def little_straight_availability(self):
         if not self.available_options[self.count][9]:
             return
 
-        count = 0
         s = list(set(self.dice))
 
-        for i in range(len(s) - 1):
-            if s[i] + 1 == s[i + 1]:
-                count += 1
-                if count == 3:
-                    predict = 30
-                    print("(10) Sm Straight is AVAILABLE  " + str(predict))
-                    return 1
+        if set([1, 2, 3, 4]).issubset(s) or set([2, 3, 4, 5]).issubset(s) or set([3, 4, 5, 6]).issubset(s):
+            predict = 30
+            print("(10) Sm Straight is AVAILABLE  " + str(predict))
+            return 1
 
         print("(10) Sm Straight can be cut")
 
-    def big_street_availability(self):
+    def big_straight_availability(self):
         if not self.available_options[self.count][10]:
             return
 
-        count = 0
         s = list(set(self.dice))
 
-        for i in range(len(s) - 1):
-            if s[i] + 1 == s[i + 1]:
-                count += 1
-                if count == 4:
-                    predict = 40
-                    print("(11) Lg Straight is AVAILABLE  " + str(predict))
-                    return 1
+        if s == [1, 2, 3, 4, 5] or s == [2, 3, 4, 5, 6]:
+            predict = 40
+            print("(11) Lg Straight is AVAILABLE  " + str(predict))
+            return 1
 
         print("(11) Lg Straight can be cut")
 
@@ -323,8 +315,8 @@ class Game:
         self.triple_availability()
         self.quadruple_availability()
         self.full_house_availability()
-        self.little_street_availability()
-        self.big_street_availability()
+        self.little_straight_availability()
+        self.big_straight_availability()
         self.yahtzee_availability()
         self.chance_availability()
         self.yahtzee_bonus_availability()
@@ -415,15 +407,15 @@ class Game:
             self.cut[self.count][8] = "CUT"
         self.available_options[self.count][8] = False
 
-    def little_street(self):
-        if self.little_street_availability():
+    def little_straight(self):
+        if self.little_straight_availability():
             self.score[self.count][9] = 30
         else:
             self.cut[self.count][9] = "CUT"
         self.available_options[self.count][9] = False
 
-    def big_street(self):
-        if self.big_street_availability():
+    def big_straight(self):
+        if self.big_straight_availability():
             self.score[self.count][10] = 40
         else:
             self.cut[self.count][10] = "CUT"
@@ -504,9 +496,9 @@ class Game:
         elif choosing == 9:
             self.full_house()
         elif choosing == 10:
-            self.little_street()
+            self.little_straight()
         elif choosing == 11:
-            self.big_street()
+            self.big_straight()
         elif choosing == 12:
             self.yahtzee()
         elif choosing == 13:
